@@ -7,6 +7,6 @@ export const COR_CARD = 'white';            // fundo dos cards
 export const COR_TEXTO = 'black';           // texto principal
 export const COR_APOIO = 'gray';            // textos de apoio e abas inativas
 export const COR_LINHA = 'gainsboro';       // bordas e divisorias
-export const COR_LIVRE = 'limegreen';       // vaga livre, pago, sucesso
+export const COR_LIVRE = 'forestgreen';     // vaga livre, pago, sucesso
 export const COR_OCUPADO = 'tomato';        // vaga ocupada, erro, alerta
 export const COR_PLACA = 'royalblue';       // faixa azul da placa mercosul
