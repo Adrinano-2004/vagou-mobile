@@ -3,6 +3,7 @@ import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePatio } from '../../PatioContext';
 import Botao from '../../components/Botao';
+import LogoVagou from '../../components/LogoVagou';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_OCUPADO, COR_LIVRE } from '../../tema';
 
 // ===== textos da tela (mudar aqui) =====
@@ -44,7 +45,9 @@ export default function Sobre() {
         <View style={styles.marca}>
           {/* mesma logo do icone do app (pasta assets) */}
           <Image source={require('../../../assets/icon.png')} style={styles.logo} />
-          <Text style={styles.nome}>Vagou</Text>
+          <View style={styles.nome}>
+            <LogoVagou cor="grafite" altura={40} />
+          </View>
           <Text style={styles.slogan}>Controle de pátio para estacionamentos</Text>
         </View>
 
@@ -112,10 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 22,
   },
   nome: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: COR_TEXTO,
-    marginTop: 10,
+    marginTop: 14,
   },
   slogan: {
     color: COR_APOIO,
