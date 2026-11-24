@@ -10,3 +10,4 @@ export const COR_LINHA = 'gainsboro';       // bordas e divisorias
 export const COR_LIVRE = 'forestgreen';     // vaga livre, pago, sucesso
 export const COR_OCUPADO = 'crimson';       // vaga ocupada, erro, alerta
 export const COR_PLACA = 'royalblue';       // faixa azul da placa mercosul
+// =============================================

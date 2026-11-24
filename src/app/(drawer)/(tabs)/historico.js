@@ -15,6 +15,7 @@ const FILTROS = [
   { valor: 'hoje', rotulo: 'Hoje' },
   { valor: 'todos', rotulo: 'Todos' },
 ];
+// =============================================
 
 // lista das saidas ja pagas
 export default function Historico() {

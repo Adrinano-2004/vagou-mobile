@@ -3,10 +3,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { COR_PRINCIPAL, COR_APOIO } from '../../../tema';
 
 // ===== configuracoes das abas (mudar aqui) =====
+// icones (nomes em https://icons.expo.fyi, biblioteca Ionicons)
 const ICONE_ABA_PAINEL = 'speedometer-outline';     // ex: 'grid-outline', 'stats-chart'
 const ICONE_ABA_ENTRADA = 'add-circle-outline';     // ex: 'enter-outline', 'add'
 const ICONE_ABA_PATIO = 'car-outline';              // ex: 'car', 'list-outline'
 const ICONE_ABA_HISTORICO = 'time-outline';         // ex: 'receipt-outline', 'calendar'
+// =============================================
 
 // abas de baixo (Bottom Tabs): Painel, Entrada, Patio e Historico
 // o cabecalho fica com o Drawer, por isso headerShown: false aqui

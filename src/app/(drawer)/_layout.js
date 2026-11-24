@@ -6,9 +6,11 @@ import { COR_PRINCIPAL, COR_TEXTO_HEADER } from '../../tema';
 const LADO_DO_MENU = 'left';                       // 'left' (esquerda) ou 'right' (direita)
 const ALINHAMENTO_TITULO = 'center';               // 'center' ou 'left'
 const TITULO_APP = 'Vagou';                        // titulo do cabecalho nas abas
+// icones (nomes em https://icons.expo.fyi, biblioteca Ionicons)
 const ICONE_PATIO = 'car-outline';                 // ex: 'car', 'car-sport-outline'
 const ICONE_TARIFAS = 'pricetags-outline';         // ex: 'cash-outline', 'pricetag'
 const ICONE_SOBRE = 'information-circle-outline';  // ex: 'help-circle-outline'
+// =============================================
 
 // menu lateral (Drawer): Patio (com as abas dentro), Tarifas e Sobre
 export default function LayoutDrawer() {

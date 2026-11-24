@@ -10,6 +10,7 @@ import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE, COR_OC
 
 // ===== configuracoes do painel (mudar aqui) =====
 const QTD_ULTIMAS = 5;   // quantas movimentacoes aparecem no fim do painel
+// =============================================
 
 // tela inicial: resumo do dia
 export default function Painel() {
