@@ -69,24 +69,31 @@ export default function SeletorLista({
 
           <CampoBusca valor={busca} onChange={setBusca} placeholder={`Pesquisar ${rotulo.toLowerCase()}`} />
 
-          {carregando || erro ? (
-            <Estado carregando={carregando} erro={erro} onTentarNovamente={onTentarNovamente} />
-          ) : (
-            <FlatList
-              data={itensFiltrados}
-              keyExtractor={(item) => item.codigo}
-              keyboardShouldPersistTaps="handled"
-              ListHeaderComponent={<Text style={styles.total}>{itensFiltrados.length} encontrados</Text>}
-              ListEmptyComponent={<Estado mensagem="Nada encontrado com esse nome." icone="search" />}
-              renderItem={({ item }) => (
-                <Pressable style={styles.item} onPress={() => escolher(item)}>
-                  <Text style={[styles.textoItem, selecionado?.codigo === item.codigo && styles.itemSelecionado]}>
-                    {item.nome}
+          {/* a lista ocupa o espaco do meio, assim o botao Fechar fica sempre embaixo */}
+          <View style={styles.meio}>
+            {carregando || erro ? (
+              <Estado carregando={carregando} erro={erro} onTentarNovamente={onTentarNovamente} />
+            ) : (
+              <FlatList
+                data={itensFiltrados}
+                keyExtractor={(item) => item.codigo}
+                keyboardShouldPersistTaps="handled"
+                ListHeaderComponent={
+                  <Text style={styles.total}>
+                    {itensFiltrados.length} {itensFiltrados.length === 1 ? 'encontrado' : 'encontrados'}
                   </Text>
-                </Pressable>
-              )}
-            />
-          )}
+                }
+                ListEmptyComponent={<Estado mensagem="Nada encontrado com esse nome." icone="search" />}
+                renderItem={({ item }) => (
+                  <Pressable style={styles.item} onPress={() => escolher(item)}>
+                    <Text style={[styles.textoItem, selecionado?.codigo === item.codigo && styles.itemSelecionado]}>
+                      {item.nome}
+                    </Text>
+                  </Pressable>
+                )}
+              />
+            )}
+          </View>
 
           <Botao titulo="Fechar" contorno onPress={fechar} />
         </SafeAreaView>
@@ -141,6 +148,9 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
+  },
+  meio: {
+    flex: 1,
   },
   total: {
     color: COR_APOIO,

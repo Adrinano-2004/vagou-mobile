@@ -148,11 +148,11 @@ export default function Entrada() {
       <Campo
         rotulo="Placa"
         value={placa}
-        onChangeText={(texto) => setPlaca(limparPlaca(texto))}
+        onChangeText={(texto) => setPlaca(limparPlaca(texto).slice(0, 7))}
         placeholder="ABC1D23"
         autoCapitalize="characters"
         autoCorrect={false}
-        maxLength={7}
+        maxLength={8}
       />
 
       <Text style={styles.rotulo}>Tipo de veículo</Text>
