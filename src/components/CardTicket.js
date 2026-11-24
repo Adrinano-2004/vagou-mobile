@@ -13,10 +13,10 @@ export default function CardTicket({ ticket, agora, onPress }) {
   const aberto = ticket.status === 'aberto';
 
   const fim = aberto ? agora || Date.now() : ticket.saida;
-  const calculo = calcularValor(tarifa, ticket.entrada, fim);
+  const calculo = calcularValor(tarifa, ticket.entrada, fim, ticket.diaria);
 
   const descricao = [ticket.marca, ticket.modelo].filter(Boolean).join(' · ') || 'Modelo não informado';
-  const detalhes = [tarifa.nome, ticket.cor].filter(Boolean).join(' · ');
+  const detalhes = [tarifa.nome, ticket.cor, ticket.diaria && 'Diária'].filter(Boolean).join(' · ');
 
   return (
     <Pressable style={({ pressed }) => [styles.card, pressed && styles.pressionado]} onPress={onPress}>

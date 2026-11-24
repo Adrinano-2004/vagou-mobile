@@ -9,10 +9,10 @@ Trabalho final de Desenvolvimento Móvel. Dupla: Adriano e Arthur Villela.
 | Tela | Navegador | O que faz |
 |---|---|---|
 | Painel | Tabs | Vagas ocupadas e livres, valor recebido hoje e últimas movimentações |
-| Entrada | Tabs | Placa, tipo, marca, modelo (API FIPE) e cor do veículo |
+| Entrada | Tabs | Placa, tipo, cobrança (por hora ou diária), marca, modelo (API FIPE) e cor do veículo |
 | Pátio | Tabs | Veículos estacionados, tempo de permanência e busca por placa |
 | Histórico | Tabs | Saídas registradas, com valor e forma de pagamento |
-| Detalhe do ticket | Stack | Cálculo do valor e registro da saída |
+| Detalhe do ticket | Stack | Cálculo do valor, lançar diária e registro da saída |
 | Tarifas | Drawer | Tabela de preços e total de vagas |
 | Sobre | Drawer | Informações do app e da dupla |
 

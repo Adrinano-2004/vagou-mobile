@@ -5,6 +5,7 @@ import { calcularValor } from './calculo';
 // ===== configuracoes iniciais (mudar aqui) =====
 const CHAVE_STORAGE = 'vagou:dados';   // nome do "arquivo" salvo no aparelho
 const VAGAS_PADRAO = 40;               // total de vagas do estacionamento
+// =============================================
 
 // tabela de precos que o app usa na primeira vez (depois o usuario edita na tela Tarifas)
 // tipoFipe diz em qual lista da API FIPE ficam as marcas desse tipo de veiculo
@@ -87,7 +88,8 @@ export function PatioProvider({ children }) {
   }
 
   // registra um veiculo entrando. Se algo estiver errado, lanca um Error com a mensagem
-  function registrarEntrada({ placa, tarifaId, marca, modelo, cor }) {
+  // diaria = true: cobra o valor fixo da diaria (cliente que vai passar o dia)
+  function registrarEntrada({ placa, tarifaId, marca, modelo, cor, diaria = false }) {
     if (noPatio.length >= vagas) {
       throw new Error('Pátio lotado: não há vagas livres.');
     }
@@ -103,6 +105,7 @@ export function PatioProvider({ children }) {
       marca,
       modelo,
       cor,
+      diaria,
       entrada: Date.now(),
       status: 'aberto',
     };
@@ -120,10 +123,15 @@ export function PatioProvider({ children }) {
         if (ticket.id !== id) {
           return ticket;
         }
-        const calculo = calcularValor(buscarTarifa(ticket.tarifaId), ticket.entrada, agora);
+        const calculo = calcularValor(buscarTarifa(ticket.tarifaId), ticket.entrada, agora, ticket.diaria);
         return { ...ticket, saida: agora, valor: calculo.valor, pagamento, status: 'pago' };
       })
     );
+  }
+
+  // lanca a diaria num veiculo que ja esta no patio (ou desfaz, se ja estava lancada)
+  function alternarDiaria(id) {
+    setTickets(tickets.map((ticket) => (ticket.id === id ? { ...ticket, diaria: !ticket.diaria } : ticket)));
   }
 
   // apaga uma entrada registrada por engano
@@ -131,7 +139,7 @@ export function PatioProvider({ children }) {
     setTickets(tickets.filter((ticket) => ticket.id !== id));
   }
 
-  // troca uma tarifa pela versao editada
+  // troca as tarifas e o total de vagas pelos valores editados
   function salvarTarifas(novasTarifas, novasVagas) {
     setTarifas(novasTarifas);
     setVagas(novasVagas);
@@ -158,6 +166,7 @@ export function PatioProvider({ children }) {
         buscarTicket,
         registrarEntrada,
         registrarSaida,
+        alternarDiaria,
         cancelarEntrada,
         salvarTarifas,
         apagarTudo,

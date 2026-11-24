@@ -4,13 +4,19 @@
 // 2. cada hora iniciada conta como hora cheia: 1a hora + horas adicionais
 // 3. ate 12h o valor nunca passa da meia diaria; de 12h a 24h, nunca passa da diaria
 // 4. cada dia completo (24h) cobra uma diaria
+// 5. diaria lancada: cobra o valor fixo da diaria, nao importa quanto tempo ficou
 
 const MINUTOS_MEIO_DIA = 12 * 60;
 const MINUTOS_DIA = 24 * 60;
 
-export function calcularValor(tarifa, entrada, saida) {
+export function calcularValor(tarifa, entrada, saida, diaria = false) {
   const minutos = Math.max(0, Math.floor((saida - entrada) / 60000));
   const detalhe = [];
+
+  if (diaria) {
+    detalhe.push(`Diária lançada: ${formatarMoeda(tarifa.diaria)}`);
+    return { minutos, valor: tarifa.diaria, detalhe };
+  }
 
   if (minutos <= tarifa.toleranciaMin) {
     detalhe.push(`Dentro da tolerância de ${tarifa.toleranciaMin} min`);

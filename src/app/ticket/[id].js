@@ -13,11 +13,12 @@ import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE, COR_OC
 
 // ===== configuracoes do ticket (mudar aqui) =====
 const PAGAMENTO_PADRAO = 'dinheiro';   // forma que ja vem marcada: 'dinheiro', 'pix' ou 'cartao'
+// =============================================
 
 // rota dinamica: o [id] do nome do arquivo vira um parametro (ex: /ticket/1732460000000)
 export default function DetalheTicket() {
   const { id, nova } = useLocalSearchParams();
-  const { buscarTicket, buscarTarifa, registrarSaida, cancelarEntrada, carregando } = usePatio();
+  const { buscarTicket, buscarTarifa, registrarSaida, alternarDiaria, cancelarEntrada, carregando } = usePatio();
   const [pagamento, setPagamento] = useState(PAGAMENTO_PADRAO);
   const [confirmarCancelamento, setConfirmarCancelamento] = useState(false);
   const [saiuAgora, setSaiuAgora] = useState(false);
@@ -40,7 +41,7 @@ export default function DetalheTicket() {
 
   const tarifa = buscarTarifa(ticket.tarifaId);
   const aberto = ticket.status === 'aberto';
-  const calculo = calcularValor(tarifa, ticket.entrada, aberto ? agora : ticket.saida);
+  const calculo = calcularValor(tarifa, ticket.entrada, aberto ? agora : ticket.saida, ticket.diaria);
   const numero = String(ticket.numero).padStart(4, '0');
 
   function sair() {
@@ -82,7 +83,7 @@ export default function DetalheTicket() {
           <Linha titulo="Entrada" valor={formatarDataHora(ticket.entrada)} />
           {!aberto && <Linha titulo="Saída" valor={formatarDataHora(ticket.saida)} />}
           <Linha titulo="Permanência" valor={formatarTempo(calculo.minutos)} />
-          <Linha titulo="Tarifa" valor={tarifa.nome} />
+          <Linha titulo="Tarifa" valor={ticket.diaria ? `${tarifa.nome} · Diária` : tarifa.nome} />
           {!aberto && <Linha titulo="Pagamento" valor={nomePagamento(ticket.pagamento)} />}
         </View>
 
@@ -101,6 +102,12 @@ export default function DetalheTicket() {
             <Text style={styles.rotulo}>Forma de pagamento</Text>
             <Opcoes opcoes={FORMAS_PAGAMENTO} selecionado={pagamento} onSelecionar={setPagamento} />
             <Botao titulo={`Registrar saída · ${formatarMoeda(calculo.valor)}`} icone="exit-outline" onPress={sair} />
+            <Botao
+              titulo={ticket.diaria ? 'Voltar a cobrar por hora' : `Lançar diária · ${formatarMoeda(tarifa.diaria)}`}
+              icone="sunny-outline"
+              contorno
+              onPress={() => alternarDiaria(ticket.id)}
+            />
             <Botao
               titulo={confirmarCancelamento ? 'Toque de novo para confirmar' : 'Cancelar entrada'}
               icone="trash-outline"

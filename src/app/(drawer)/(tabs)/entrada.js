@@ -3,7 +3,7 @@ import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { usePatio } from '../../../PatioContext';
 import { buscarMarcas, buscarModelos } from '../../../api';
-import { limparPlaca, placaValida } from '../../../calculo';
+import { limparPlaca, placaValida, formatarMoeda } from '../../../calculo';
 import Campo from '../../../components/Campo';
 import Opcoes from '../../../components/Opcoes';
 import SeletorLista from '../../../components/SeletorLista';
@@ -12,8 +12,10 @@ import Botao from '../../../components/Botao';
 import { COR_FUNDO, COR_APOIO, COR_OCUPADO } from '../../../tema';
 
 // ===== configuracoes da entrada (mudar aqui) =====
-const TIPO_PADRAO = 'carro';   // tipo que ja vem marcado: 'carro', 'moto' ou 'utilitario'
+const TIPO_PADRAO = 'carro';       // tipo que ja vem marcado: 'carro', 'moto' ou 'utilitario'
+const COBRANCA_PADRAO = 'hora';    // 'hora' (pelo tempo) ou 'diaria' (valor fixo da diaria)
 const CORES_VEICULO = ['Branco', 'Preto', 'Prata', 'Cinza', 'Vermelho', 'Azul', 'Outra'];
+// =============================================
 
 export default function Entrada() {
   const { tarifas, noPatio, vagas, registrarEntrada } = usePatio();
@@ -24,6 +26,7 @@ export default function Entrada() {
   const [marca, setMarca] = useState(null);
   const [modelo, setModelo] = useState(null);
   const [cor, setCor] = useState('');
+  const [cobranca, setCobranca] = useState(COBRANCA_PADRAO);
   const [erro, setErro] = useState('');
 
   // dados que vem da API
@@ -107,6 +110,7 @@ export default function Entrada() {
     setMarca(null);
     setModelo(null);
     setCor('');
+    setCobranca(COBRANCA_PADRAO);
     setErro('');
   }
 
@@ -126,6 +130,7 @@ export default function Entrada() {
         marca: marca ? marca.nome : '',
         modelo: modelo ? modelo.nome : '',
         cor,
+        diaria: cobranca === 'diaria',
       });
       limparFormulario();
       // abre o ticket que acabou de ser criado (nova=1 mostra o aviso de sucesso)
@@ -160,6 +165,16 @@ export default function Entrada() {
         opcoes={tarifas.map((item) => ({ valor: item.id, rotulo: item.nome }))}
         selecionado={tarifaId}
         onSelecionar={escolherTipo}
+      />
+
+      <Text style={styles.rotulo}>Cobrança</Text>
+      <Opcoes
+        opcoes={[
+          { valor: 'hora', rotulo: 'Por hora' },
+          { valor: 'diaria', rotulo: `Diária · ${formatarMoeda(tarifa.diaria)}` },
+        ]}
+        selecionado={cobranca}
+        onSelecionar={setCobranca}
       />
 
       <SeletorLista
