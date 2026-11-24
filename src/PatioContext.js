@@ -14,6 +14,19 @@ const TARIFAS_PADRAO = [
   { id: 'utilitario', nome: 'Utilitário', tipoFipe: 'caminhoes', toleranciaMin: 10, primeiraHora: 14, horaAdicional: 7, meiaDiaria: 40, diaria: 60 },
 ];
 
+// formas de pagamento aceitas na saida
+export const FORMAS_PAGAMENTO = [
+  { valor: 'dinheiro', rotulo: 'Dinheiro' },
+  { valor: 'pix', rotulo: 'PIX' },
+  { valor: 'cartao', rotulo: 'Cartão' },
+];
+
+// 'pix' -> 'PIX'
+export function nomePagamento(valor) {
+  const forma = FORMAS_PAGAMENTO.find((item) => item.valor === valor);
+  return forma ? forma.rotulo : valor;
+}
+
 const PatioContext = createContext(null);
 
 // guarda os dados do estacionamento e compartilha com todas as telas
