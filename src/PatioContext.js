@@ -5,6 +5,8 @@ import { calcularValor } from './calculo';
 // ===== configuracoes iniciais (mudar aqui) =====
 const CHAVE_STORAGE = 'vagou:dados';   // nome do "arquivo" salvo no aparelho
 const VAGAS_PADRAO = 40;               // total de vagas do estacionamento
+// quem recebe o PIX (o dono preenche a chave na tela Tarifas)
+const PIX_PADRAO = { chave: '', nome: 'Vagou Estacionamento', cidade: 'Sao Paulo' };
 // =============================================
 
 // tabela de precos que o app usa na primeira vez (depois o usuario edita na tela Tarifas)
@@ -36,6 +38,7 @@ export function PatioProvider({ children }) {
   const [tarifas, setTarifas] = useState(TARIFAS_PADRAO);
   const [vagas, setVagas] = useState(VAGAS_PADRAO);
   const [proximoNumero, setProximoNumero] = useState(1);
+  const [pix, setPix] = useState(PIX_PADRAO);
   const [carregando, setCarregando] = useState(true);
 
   // 1) quando o app abre: le os dados salvos no aparelho (so uma vez, por causa do [])
@@ -49,6 +52,7 @@ export function PatioProvider({ children }) {
           setTarifas(dados.tarifas || TARIFAS_PADRAO);
           setVagas(dados.vagas || VAGAS_PADRAO);
           setProximoNumero(dados.proximoNumero || 1);
+          setPix(dados.pix || PIX_PADRAO);
         }
       } catch (erro) {
         console.log('Erro ao carregar os dados salvos:', erro);
@@ -65,11 +69,11 @@ export function PatioProvider({ children }) {
     if (carregando) {
       return;
     }
-    const dados = { tickets, tarifas, vagas, proximoNumero };
+    const dados = { tickets, tarifas, vagas, proximoNumero, pix };
     AsyncStorage.setItem(CHAVE_STORAGE, JSON.stringify(dados)).catch((erro) =>
       console.log('Erro ao salvar os dados:', erro)
     );
-  }, [tickets, tarifas, vagas, proximoNumero, carregando]);
+  }, [tickets, tarifas, vagas, proximoNumero, pix, carregando]);
 
   // veiculos que ainda estao no estacionamento
   const noPatio = tickets.filter((ticket) => ticket.status === 'aberto');
@@ -139,10 +143,11 @@ export function PatioProvider({ children }) {
     setTickets(tickets.filter((ticket) => ticket.id !== id));
   }
 
-  // troca as tarifas e o total de vagas pelos valores editados
-  function salvarTarifas(novasTarifas, novasVagas) {
+  // troca as tarifas, o total de vagas e os dados do PIX pelos valores editados
+  function salvarTarifas(novasTarifas, novasVagas, novoPix) {
     setTarifas(novasTarifas);
     setVagas(novasVagas);
+    setPix(novoPix);
   }
 
   // volta o app ao estado inicial (usado na tela Sobre)
@@ -151,6 +156,7 @@ export function PatioProvider({ children }) {
     setTarifas(TARIFAS_PADRAO);
     setVagas(VAGAS_PADRAO);
     setProximoNumero(1);
+    setPix(PIX_PADRAO);
   }
 
   return (
@@ -161,6 +167,7 @@ export function PatioProvider({ children }) {
         historico,
         tarifas,
         vagas,
+        pix,
         carregando,
         buscarTarifa,
         buscarTicket,

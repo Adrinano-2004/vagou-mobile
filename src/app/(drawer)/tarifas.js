@@ -33,9 +33,10 @@ function paraNumero(texto) {
 
 // tabela de precos e total de vagas (editaveis e salvos no aparelho)
 export default function Tarifas() {
-  const { tarifas, vagas, salvarTarifas } = usePatio();
+  const { tarifas, vagas, pix, salvarTarifas } = usePatio();
   const [rascunho, setRascunho] = useState(paraTexto(tarifas));
   const [vagasTexto, setVagasTexto] = useState(String(vagas));
+  const [pixRascunho, setPixRascunho] = useState(pix);
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState('');
 
@@ -43,11 +44,17 @@ export default function Tarifas() {
   useEffect(() => {
     setRascunho(paraTexto(tarifas));
     setVagasTexto(String(vagas));
-  }, [tarifas, vagas]);
+    setPixRascunho(pix);
+  }, [tarifas, vagas, pix]);
 
   function alterar(id, chave, texto) {
     setMensagem('');
     setRascunho(rascunho.map((tarifa) => (tarifa.id === id ? { ...tarifa, [chave]: texto } : tarifa)));
+  }
+
+  function alterarPix(chave, texto) {
+    setMensagem('');
+    setPixRascunho({ ...pixRascunho, [chave]: texto });
   }
 
   function salvar() {
@@ -74,7 +81,13 @@ export default function Tarifas() {
       novasTarifas.push(nova);
     }
 
-    salvarTarifas(novasTarifas, novasVagas);
+    const novoPix = {
+      chave: pixRascunho.chave.trim(),
+      nome: pixRascunho.nome.trim(),
+      cidade: pixRascunho.cidade.trim(),
+    };
+
+    salvarTarifas(novasTarifas, novasVagas, novoPix);
     setMensagem('✓ Tarifas salvas no aparelho!');
   }
 
@@ -115,6 +128,31 @@ export default function Tarifas() {
             </View>
           </View>
         ))}
+
+        <View style={styles.card}>
+          <Text style={styles.nome}>Dados do PIX</Text>
+          <Text style={styles.explicacao}>Usados para gerar o QR code na saída. Sem a chave, o QR não aparece.</Text>
+          <Campo
+            rotulo="Chave PIX"
+            value={pixRascunho.chave}
+            onChangeText={(texto) => alterarPix('chave', texto)}
+            placeholder="CPF, CNPJ, e-mail, celular ou chave aleatória"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Campo
+            rotulo="Nome de quem recebe"
+            value={pixRascunho.nome}
+            onChangeText={(texto) => alterarPix('nome', texto)}
+            maxLength={25}
+          />
+          <Campo
+            rotulo="Cidade"
+            value={pixRascunho.cidade}
+            onChangeText={(texto) => alterarPix('cidade', texto)}
+            maxLength={15}
+          />
+        </View>
 
         {erro !== '' && <Text style={styles.erro}>{erro}</Text>}
         {mensagem !== '' && <Text style={styles.sucesso}>{mensagem}</Text>}
