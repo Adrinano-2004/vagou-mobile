@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { usePatio } from '../../PatioContext';
 import Botao from '../../components/Botao';
-import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_PRINCIPAL, COR_OCUPADO, COR_LIVRE } from '../../tema';
+import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_OCUPADO, COR_LIVRE } from '../../tema';
 
 // ===== textos da tela (mudar aqui) =====
 const DUPLA = 'Adriano e Arthur Villela';
@@ -21,6 +20,7 @@ const TECNOLOGIAS = [
   'AsyncStorage para salvar no aparelho',
   'Context, useState e useEffect',
 ];
+// =============================================
 
 export default function Sobre() {
   const { apagarTudo } = usePatio();
@@ -42,9 +42,8 @@ export default function Sobre() {
     <SafeAreaView style={styles.tela} edges={['bottom']}>
       <ScrollView contentContainerStyle={styles.conteudo}>
         <View style={styles.marca}>
-          <View style={styles.logo}>
-            <Ionicons name="car-sport" size={40} color="white" />
-          </View>
+          {/* mesma logo do icone do app (pasta assets) */}
+          <Image source={require('../../../assets/icon.png')} style={styles.logo} />
           <Text style={styles.nome}>Vagou</Text>
           <Text style={styles.slogan}>Controle de pátio para estacionamentos</Text>
         </View>
@@ -108,12 +107,9 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   logo: {
-    width: 76,
-    height: 76,
-    borderRadius: 20,
-    backgroundColor: COR_PRINCIPAL,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 84,
+    height: 84,
+    borderRadius: 22,
   },
   nome: {
     fontSize: 32,
