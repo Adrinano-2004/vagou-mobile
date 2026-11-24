@@ -9,6 +9,7 @@ import Placa from '../../components/Placa';
 import Opcoes from '../../components/Opcoes';
 import Botao from '../../components/Botao';
 import Estado from '../../components/Estado';
+import QrPix from '../../components/QrPix';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE, COR_OCUPADO, COR_PRINCIPAL } from '../../tema';
 
 // ===== configuracoes do ticket (mudar aqui) =====
@@ -18,7 +19,7 @@ const PAGAMENTO_PADRAO = 'dinheiro';   // forma que ja vem marcada: 'dinheiro', 
 // rota dinamica: o [id] do nome do arquivo vira um parametro (ex: /ticket/1732460000000)
 export default function DetalheTicket() {
   const { id, nova } = useLocalSearchParams();
-  const { buscarTicket, buscarTarifa, registrarSaida, alternarDiaria, cancelarEntrada, carregando } = usePatio();
+  const { buscarTicket, buscarTarifa, registrarSaida, alternarDiaria, cancelarEntrada, pix, carregando } = usePatio();
   const [pagamento, setPagamento] = useState(PAGAMENTO_PADRAO);
   const [confirmarCancelamento, setConfirmarCancelamento] = useState(false);
   const [saiuAgora, setSaiuAgora] = useState(false);
@@ -101,6 +102,8 @@ export default function DetalheTicket() {
           <View>
             <Text style={styles.rotulo}>Forma de pagamento</Text>
             <Opcoes opcoes={FORMAS_PAGAMENTO} selecionado={pagamento} onSelecionar={setPagamento} />
+            {/* no PIX aparece o QR code com o valor; dinheiro e cartao seguem direto */}
+            {pagamento === 'pix' && <QrPix pix={pix} valor={calculo.valor} identificador={`TICKET${numero}`} />}
             <Botao titulo={`Registrar saída · ${formatarMoeda(calculo.valor)}`} icone="exit-outline" onPress={sair} />
             <Botao
               titulo={ticket.diaria ? 'Voltar a cobrar por hora' : `Lançar diária · ${formatarMoeda(tarifa.diaria)}`}

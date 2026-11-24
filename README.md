@@ -12,8 +12,8 @@ Trabalho final de Desenvolvimento Móvel. Dupla: Adriano e Arthur Villela.
 | Entrada | Tabs | Placa, tipo, cobrança (por hora ou diária), marca, modelo (API FIPE) e cor do veículo |
 | Pátio | Tabs | Veículos estacionados, tempo de permanência e busca por placa |
 | Histórico | Tabs | Saídas registradas, com valor e forma de pagamento |
-| Detalhe do ticket | Stack | Cálculo do valor, lançar diária e registro da saída |
-| Tarifas | Drawer | Tabela de preços e total de vagas |
+| Detalhe do ticket | Stack | Cálculo do valor, lançar diária, QR code do PIX e registro da saída |
+| Tarifas | Drawer | Tabela de preços, total de vagas e chave PIX |
 | Sobre | Drawer | Informações do app e da dupla |
 
 ## Tecnologias
@@ -21,6 +21,7 @@ Trabalho final de Desenvolvimento Móvel. Dupla: Adriano e Arthur Villela.
 - Expo + Expo Router (rotas baseadas em arquivos: Stack, Drawer e Tabs)
 - `fetch` na API da Tabela FIPE (`https://parallelum.com.br/fipe/api/v1`)
 - AsyncStorage para salvar os dados no aparelho
+- PIX copia e cola (padrão BR Code do Banco Central) com `react-native-qrcode-svg`
 - Context API, `useState` e `useEffect`
 
 ## Como rodar
