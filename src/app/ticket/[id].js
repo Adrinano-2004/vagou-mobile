@@ -12,18 +12,15 @@ import Estado from '../../components/Estado';
 import QrPix from '../../components/QrPix';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE, COR_OCUPADO, COR_PRINCIPAL } from '../../tema';
 
-// ===== configuracoes do ticket (mudar aqui) =====
-const PAGAMENTO_PADRAO = 'dinheiro';   // forma que ja vem marcada: 'dinheiro', 'pix' ou 'cartao'
-// =============================================
+const PAGAMENTO_PADRAO = 'dinheiro';
 
-// rota dinamica: o [id] do nome do arquivo vira um parametro (ex: /ticket/1732460000000)
 export default function DetalheTicket() {
   const { id, nova } = useLocalSearchParams();
   const { buscarTicket, buscarTarifa, registrarSaida, alternarDiaria, cancelarEntrada, pix, carregando } = usePatio();
   const [pagamento, setPagamento] = useState(PAGAMENTO_PADRAO);
   const [confirmarCancelamento, setConfirmarCancelamento] = useState(false);
   const [saiuAgora, setSaiuAgora] = useState(false);
-  const agora = useAgora(15); // o valor vai atualizando enquanto a tela esta aberta
+  const agora = useAgora(15);
 
   const ticket = buscarTicket(id);
 
@@ -50,7 +47,6 @@ export default function DetalheTicket() {
     setSaiuAgora(true);
   }
 
-  // o cancelamento pede 2 toques, pra ninguem apagar uma entrada sem querer
   function cancelar() {
     if (!confirmarCancelamento) {
       setConfirmarCancelamento(true);
@@ -62,7 +58,7 @@ export default function DetalheTicket() {
 
   return (
     <SafeAreaView style={styles.tela} edges={['bottom']}>
-      {/* muda o titulo do cabecalho do Stack */}
+
       <Stack.Screen options={{ title: `Ticket #${numero}` }} />
 
       <ScrollView contentContainerStyle={styles.conteudo}>
@@ -102,7 +98,7 @@ export default function DetalheTicket() {
           <View>
             <Text style={styles.rotulo}>Forma de pagamento</Text>
             <Opcoes opcoes={FORMAS_PAGAMENTO} selecionado={pagamento} onSelecionar={setPagamento} />
-            {/* no PIX aparece o QR code com o valor; dinheiro e cartao seguem direto */}
+
             {pagamento === 'pix' && <QrPix pix={pix} valor={calculo.valor} identificador={`TICKET${numero}`} />}
             <Botao titulo={`Registrar saída · ${formatarMoeda(calculo.valor)}`} icone="exit-outline" onPress={sair} />
             <Botao
@@ -127,7 +123,6 @@ export default function DetalheTicket() {
   );
 }
 
-// componente pequeno so desta tela: uma linha "titulo ...... valor"
 function Linha({ titulo, valor }) {
   return (
     <View style={styles.linha}>

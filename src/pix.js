@@ -1,14 +1,7 @@
-// gera o "PIX copia e cola" (BR Code, padrao do Banco Central)
-// o mesmo texto vira o QR code que o cliente le no app do banco
-// (mesma logica do Vagou original)
-
-// cada campo do codigo e: ID (2 digitos) + TAMANHO (2 digitos) + VALOR
-// ex: campo('53', '986') -> '5303986'  (986 = codigo do real)
 function campo(id, valor) {
   return id + String(valor.length).padStart(2, '0') + valor;
 }
 
-// codigo de verificacao no fim do PIX (o app do banco confere se o texto nao foi alterado)
 export function crc16(texto) {
   let crc = 0xffff;
   for (let i = 0; i < texto.length; i++) {
@@ -21,7 +14,6 @@ export function crc16(texto) {
   return crc.toString(16).toUpperCase().padStart(4, '0');
 }
 
-// o PIX so aceita letras sem acento, numeros e espaco: 'São Paulo' -> 'SAO PAULO'
 function limpar(texto, maximo) {
   let resultado = String(texto || '');
   if (typeof resultado.normalize === 'function') {
@@ -34,9 +26,6 @@ function limpar(texto, maximo) {
     .trim();
 }
 
-// monta o codigo completo
-// chave: chave PIX de quem recebe (CPF, CNPJ, e-mail, telefone +55... ou chave aleatoria)
-// identificador: aparece no extrato (usamos o numero do ticket)
 export function gerarPix({ chave, nome, cidade, valor, identificador }) {
   const conta = campo('00', 'br.gov.bcb.pix') + campo('01', chave.trim());
 
@@ -51,6 +40,6 @@ export function gerarPix({ chave, nome, cidade, valor, identificador }) {
     campo('60', limpar(cidade, 15) || 'BRASIL') +
     campo('62', campo('05', limpar(identificador, 25).replace(/ /g, '') || '***'));
 
-  codigo += '6304'; // inicio do campo do CRC
+  codigo += '6304';
   return codigo + crc16(codigo);
 }

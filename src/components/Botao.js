@@ -2,8 +2,6 @@ import { Pressable, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COR_PRINCIPAL } from '../tema';
 
-// botao padrao do app
-// contorno = true deixa o botao so com a borda (pra acoes secundarias)
 export default function Botao({ titulo, onPress, icone, cor = COR_PRINCIPAL, contorno = false, desabilitado = false }) {
   const corTexto = contorno ? cor : 'white';
 

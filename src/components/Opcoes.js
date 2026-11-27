@@ -1,8 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { COR_PRINCIPAL, COR_CARD, COR_TEXTO, COR_LINHA } from '../tema';
 
-// linha de botoes pra escolher UMA opcao (tipo de veiculo, cor, forma de pagamento, filtro)
-// opcoes: [{ valor: 'pix', rotulo: 'PIX' }, ...]
 export default function Opcoes({ opcoes, selecionado, onSelecionar }) {
   return (
     <View style={styles.linha}>

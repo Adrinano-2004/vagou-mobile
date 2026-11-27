@@ -2,8 +2,6 @@ import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COR_CARD, COR_APOIO, COR_LINHA } from '../tema';
 
-// campo de pesquisa com lupa e botao de limpar
-// usado no Patio, no Historico e na lista de marcas/modelos
 export default function CampoBusca({ valor, onChange, placeholder = 'Pesquisar' }) {
   return (
     <View style={styles.caixa}>

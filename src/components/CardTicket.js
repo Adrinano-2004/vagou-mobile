@@ -4,9 +4,6 @@ import { usePatio, nomePagamento } from '../PatioContext';
 import { calcularValor, formatarMoeda, formatarTempo, formatarHora, formatarDataHora } from '../calculo';
 import { COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE } from '../tema';
 
-// card de um veiculo, usado no Patio, no Historico e no Painel
-// - veiculo no patio: mostra o tempo ate agora e o valor parcial
-// - veiculo que ja saiu: mostra o valor pago e a forma de pagamento
 export default function CardTicket({ ticket, agora, onPress }) {
   const { buscarTarifa } = usePatio();
   const tarifa = buscarTarifa(ticket.tarifaId);

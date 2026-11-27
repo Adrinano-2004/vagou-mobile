@@ -32,3 +32,5 @@ npx expo start
 ```
 
 Depois, leia o QR code com o app Expo Go no celular ou aperte `w` para abrir no navegador.
+
+Grupo: Adriano Campos e Arthur Villela

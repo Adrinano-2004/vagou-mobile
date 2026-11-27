@@ -1,8 +1,6 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { COR_CARD, COR_APOIO, COR_LINHA } from '../tema';
 
-// campo de formulario com titulo em cima
-// o resto das props (value, onChangeText, keyboardType...) vai direto pro TextInput
 export default function Campo({ rotulo, style, ...props }) {
   return (
     <View style={[styles.grupo, style]}>

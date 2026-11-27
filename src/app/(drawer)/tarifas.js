@@ -6,7 +6,6 @@ import Campo from '../../components/Campo';
 import Botao from '../../components/Botao';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE, COR_OCUPADO } from '../../tema';
 
-// campos de cada tarifa que aparecem na tela (chave no objeto da tarifa -> titulo)
 const CAMPOS = [
   { chave: 'toleranciaMin', rotulo: 'Tolerância (min)' },
   { chave: 'primeiraHora', rotulo: '1ª hora (R$)' },
@@ -15,7 +14,6 @@ const CAMPOS = [
   { chave: 'diaria', rotulo: 'Diária (R$)' },
 ];
 
-// transforma as tarifas em texto pros campos (o TextInput so trabalha com texto)
 function paraTexto(tarifas) {
   return tarifas.map((tarifa) => {
     const copia = { ...tarifa };
@@ -26,12 +24,10 @@ function paraTexto(tarifas) {
   });
 }
 
-// '12,50' -> 12.5  |  'abc' -> NaN
 function paraNumero(texto) {
   return Number(String(texto).replace(',', '.'));
 }
 
-// tabela de precos e total de vagas (editaveis e salvos no aparelho)
 export default function Tarifas() {
   const { tarifas, vagas, pix, salvarTarifas } = usePatio();
   const [rascunho, setRascunho] = useState(paraTexto(tarifas));
@@ -40,7 +36,6 @@ export default function Tarifas() {
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState('');
 
-  // se as tarifas mudarem por fora (ex: "apagar dados" no Sobre), atualiza os campos
   useEffect(() => {
     setRascunho(paraTexto(tarifas));
     setVagasTexto(String(vagas));

@@ -11,16 +11,13 @@ import Placa from '../../../components/Placa';
 import Botao from '../../../components/Botao';
 import { COR_FUNDO, COR_APOIO, COR_OCUPADO } from '../../../tema';
 
-// ===== configuracoes da entrada (mudar aqui) =====
-const TIPO_PADRAO = 'carro';       // tipo que ja vem marcado: 'carro', 'moto' ou 'utilitario'
-const COBRANCA_PADRAO = 'hora';    // 'hora' (pelo tempo) ou 'diaria' (valor fixo da diaria)
+const TIPO_PADRAO = 'carro';
+const COBRANCA_PADRAO = 'hora';
 const CORES_VEICULO = ['Branco', 'Preto', 'Prata', 'Cinza', 'Vermelho', 'Azul', 'Outra'];
-// =============================================
 
 export default function Entrada() {
   const { tarifas, noPatio, vagas, registrarEntrada } = usePatio();
 
-  // dados do formulario
   const [placa, setPlaca] = useState('');
   const [tarifaId, setTarifaId] = useState(TIPO_PADRAO);
   const [marca, setMarca] = useState(null);
@@ -29,7 +26,6 @@ export default function Entrada() {
   const [cobranca, setCobranca] = useState(COBRANCA_PADRAO);
   const [erro, setErro] = useState('');
 
-  // dados que vem da API
   const [marcas, setMarcas] = useState([]);
   const [carregandoMarcas, setCarregandoMarcas] = useState(false);
   const [erroMarcas, setErroMarcas] = useState('');
@@ -44,9 +40,8 @@ export default function Entrada() {
   const tipoFipe = tarifa.tipoFipe;
   const livres = vagas - noPatio.length;
 
-  // busca as marcas na API sempre que o tipo de veiculo muda (carro, moto...)
   useEffect(() => {
-    let ativo = true; // evita mostrar a resposta de uma busca antiga se o tipo mudar no meio
+    let ativo = true;
 
     async function carregar() {
       setCarregandoMarcas(true);
@@ -67,7 +62,6 @@ export default function Entrada() {
     };
   }, [tipoFipe, tentativaMarcas]);
 
-  // busca os modelos na API sempre que a marca escolhida muda
   useEffect(() => {
     if (!marca) {
       setModelos([]);
@@ -96,7 +90,7 @@ export default function Entrada() {
 
   function escolherTipo(id) {
     setTarifaId(id);
-    setMarca(null); // marcas de carro e de moto sao diferentes, entao limpa
+    setMarca(null);
     setModelo(null);
   }
 
@@ -133,7 +127,7 @@ export default function Entrada() {
         diaria: cobranca === 'diaria',
       });
       limparFormulario();
-      // abre o ticket que acabou de ser criado (nova=1 mostra o aviso de sucesso)
+
       router.push({ pathname: '/ticket/[id]', params: { id: ticket.id, nova: '1' } });
     } catch (e) {
       setErro(e.message);

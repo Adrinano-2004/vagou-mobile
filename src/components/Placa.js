@@ -1,10 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { COR_PLACA } from '../tema';
 
-// desenho da placa no padrao Mercosul (faixa azul com "BRASIL")
-// grande = true e usada no detalhe do ticket
 export default function Placa({ placa, grande = false }) {
-  // placa antiga (ABC1234) aparece com hifen: ABC-1234
   const texto = /^[A-Z]{3}[0-9]{4}$/.test(placa) ? `${placa.slice(0, 3)}-${placa.slice(3)}` : placa;
 
   return (

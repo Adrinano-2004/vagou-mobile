@@ -8,11 +8,8 @@ import Estado from '../../../components/Estado';
 import Botao from '../../../components/Botao';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE, COR_OCUPADO } from '../../../tema';
 
-// ===== configuracoes do painel (mudar aqui) =====
-const QTD_ULTIMAS = 5;   // quantas movimentacoes aparecem no fim do painel
-// =============================================
+const QTD_ULTIMAS = 5;
 
-// tela inicial: resumo do dia
 export default function Painel() {
   const { tickets, noPatio, historico, vagas, carregando } = usePatio();
   const agora = useAgora(30);
@@ -29,7 +26,6 @@ export default function Painel() {
   const recebidoHoje = saidasHoje.reduce((soma, ticket) => soma + ticket.valor, 0);
   const entradasHoje = tickets.filter((ticket) => ehHoje(ticket.entrada)).length;
 
-  // ultimas movimentacoes: ordena pela entrada ou saida mais recente
   const ultimas = [...tickets]
     .sort((a, b) => (b.saida || b.entrada) - (a.saida || a.entrada))
     .slice(0, QTD_ULTIMAS);
@@ -43,7 +39,6 @@ export default function Painel() {
           <Text style={styles.deVagas}> / {vagas} vagas</Text>
         </Text>
 
-        {/* barra de ocupacao: a largura da parte colorida e a porcentagem */}
         <View style={styles.barra}>
           <View
             style={[

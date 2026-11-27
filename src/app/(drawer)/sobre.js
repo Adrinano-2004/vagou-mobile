@@ -6,7 +6,6 @@ import Botao from '../../components/Botao';
 import LogoVagou from '../../components/LogoVagou';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_OCUPADO, COR_LIVRE } from '../../tema';
 
-// ===== textos da tela (mudar aqui) =====
 const DUPLA = 'Adriano e Arthur Villela';
 const PASSOS = [
   'Na aba Entrada, digite a placa, escolha o tipo, a marca e o modelo.',
@@ -21,14 +20,12 @@ const TECNOLOGIAS = [
   'AsyncStorage para salvar no aparelho',
   'Context, useState e useEffect',
 ];
-// =============================================
 
 export default function Sobre() {
   const { apagarTudo } = usePatio();
   const [confirmar, setConfirmar] = useState(false);
   const [apagado, setApagado] = useState(false);
 
-  // pede 2 toques pra apagar
   function apagar() {
     if (!confirmar) {
       setConfirmar(true);
@@ -43,7 +40,7 @@ export default function Sobre() {
     <SafeAreaView style={styles.tela} edges={['bottom']}>
       <ScrollView contentContainerStyle={styles.conteudo}>
         <View style={styles.marca}>
-          {/* mesma logo do icone do app (pasta assets) */}
+
           <Image source={require('../../../assets/icon.png')} style={styles.logo} />
           <View style={styles.nome}>
             <LogoVagou cor="grafite" altura={40} />

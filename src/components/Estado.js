@@ -3,11 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 import Botao from './Botao';
 import { COR_PRINCIPAL, COR_APOIO, COR_OCUPADO } from '../tema';
 
-// mostra o feedback visual de uma tela ou lista:
-// - carregando: rodinha girando
-// - erro: mensagem em vermelho + botao "Tentar de novo"
-// - mensagem: aviso de lista vazia (com icone)
-// children: algo a mais embaixo (ex: um botao)
 export default function Estado({ carregando, erro, onTentarNovamente, mensagem, icone = 'file-tray-outline', children }) {
   if (carregando) {
     return (

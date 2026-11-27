@@ -9,15 +9,12 @@ import Opcoes from '../../../components/Opcoes';
 import Estado from '../../../components/Estado';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA } from '../../../tema';
 
-// ===== configuracoes do historico (mudar aqui) =====
-const FILTRO_PADRAO = 'hoje';   // 'hoje' ou 'todos'
+const FILTRO_PADRAO = 'hoje';
 const FILTROS = [
   { valor: 'hoje', rotulo: 'Hoje' },
   { valor: 'todos', rotulo: 'Todos' },
 ];
-// =============================================
 
-// lista das saidas ja pagas
 export default function Historico() {
   const { historico, carregando } = usePatio();
   const [busca, setBusca] = useState('');
@@ -27,7 +24,6 @@ export default function Historico() {
     return <Estado carregando />;
   }
 
-  // 1) filtra pelo periodo  2) filtra pela pesquisa
   const texto = busca.trim().toUpperCase();
   const lista = historico
     .filter((ticket) => filtro === 'todos' || ehHoje(ticket.saida))

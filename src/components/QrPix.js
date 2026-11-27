@@ -8,16 +8,12 @@ import { gerarPix } from '../pix';
 import { formatarMoeda } from '../calculo';
 import { COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA, COR_LIVRE } from '../tema';
 
-// ===== configuracoes do QR code (mudar aqui) =====
-const TAMANHO_QR = 200;    // tamanho do QR code na tela
-const COR_QR = 'black';    // cor dos quadradinhos (use cor escura, senao o banco nao le)
-// =============================================
+const TAMANHO_QR = 200;
+const COR_QR = 'black';
 
-// card com o QR code do PIX, mostrado no ticket quando a forma de pagamento e PIX
 export default function QrPix({ pix, valor, identificador }) {
   const [copiado, setCopiado] = useState(false);
 
-  // sem a chave cadastrada nao da pra gerar o PIX
   if (!pix.chave) {
     return (
       <View style={styles.card}>

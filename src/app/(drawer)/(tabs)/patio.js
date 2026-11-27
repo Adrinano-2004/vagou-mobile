@@ -9,17 +9,15 @@ import Estado from '../../../components/Estado';
 import Botao from '../../../components/Botao';
 import { COR_FUNDO, COR_APOIO } from '../../../tema';
 
-// lista dos veiculos que estao no estacionamento agora
 export default function Patio() {
   const { noPatio, vagas, carregando } = usePatio();
   const [busca, setBusca] = useState('');
-  const agora = useAgora(30); // atualiza o tempo e o valor a cada 30 segundos
+  const agora = useAgora(30);
 
   if (carregando) {
     return <Estado carregando mensagem="Carregando o pátio..." />;
   }
 
-  // pesquisa pela placa, marca ou modelo
   const texto = busca.trim().toUpperCase();
   const lista = noPatio.filter((ticket) =>
     `${ticket.placa} ${ticket.marca} ${ticket.modelo}`.toUpperCase().includes(texto)

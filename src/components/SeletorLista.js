@@ -7,8 +7,6 @@ import Estado from './Estado';
 import Botao from './Botao';
 import { COR_FUNDO, COR_CARD, COR_TEXTO, COR_APOIO, COR_LINHA } from '../tema';
 
-// campo que abre uma janela com uma lista pesquisavel pra escolher um item
-// usado na tela Entrada duas vezes: pra marca e pra modelo (os dois vem da API FIPE)
 export default function SeletorLista({
   rotulo,
   itens,
@@ -23,7 +21,6 @@ export default function SeletorLista({
   const [aberto, setAberto] = useState(false);
   const [busca, setBusca] = useState('');
 
-  // filtra pelo nome, sem diferenciar maiuscula de minuscula
   const texto = busca.trim().toLowerCase();
   const itensFiltrados = itens.filter((item) => item.nome.toLowerCase().includes(texto));
 
@@ -69,7 +66,6 @@ export default function SeletorLista({
 
           <CampoBusca valor={busca} onChange={setBusca} placeholder={`Pesquisar ${rotulo.toLowerCase()}`} />
 
-          {/* a lista ocupa o espaco do meio, assim o botao Fechar fica sempre embaixo */}
           <View style={styles.meio}>
             {carregando || erro ? (
               <Estado carregando={carregando} erro={erro} onTentarNovamente={onTentarNovamente} />
